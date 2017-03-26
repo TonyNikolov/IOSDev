@@ -129,15 +129,9 @@ class LoginController: UIViewController, DataDelegate {
                 print("invalid input")
                 return
         }
-        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user: FIRUser?, error) in
-            if error != nil{
-                print(error!)
-            } else{
-                self.data?.delegate = self
-                self.data?.userLogin(withEmail: email, andPassword: password)
-            }
-            
-        })
+        self.data?.delegate = self
+        self.data?.userLogin(withEmail: email, andPassword: password)
+        
     }
     
     
