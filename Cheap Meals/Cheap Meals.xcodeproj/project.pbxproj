@@ -20,6 +20,9 @@
 		EE07DA971E870B3000A2FABF /* Cheap_MealsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE07DA961E870B3000A2FABF /* Cheap_MealsUITests.swift */; };
 		EE07DAA61E87119400A2FABF /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE07DAA51E87119400A2FABF /* LoginController.swift */; };
 		EE51A08B1E87BA6A008DC7E4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EE51A08A1E87BA6A008DC7E4 /* GoogleService-Info.plist */; };
+		EEAAD1301E883F5200388E83 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAAD12F1E883F5200388E83 /* Data.swift */; };
+		EEAAD1321E883FAF00388E83 /* DataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAAD1311E883FAF00388E83 /* DataProtocol.swift */; };
+		EEAAD1341E88438100388E83 /* DataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAAD1331E88438100388E83 /* DataDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +67,9 @@
 		EE07DA981E870B3000A2FABF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE07DAA51E87119400A2FABF /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		EE51A08A1E87BA6A008DC7E4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EEAAD12F1E883F5200388E83 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		EEAAD1311E883FAF00388E83 /* DataProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProtocol.swift; sourceTree = "<group>"; };
+		EEAAD1331E88438100388E83 /* DataDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataDelegate.swift; sourceTree = "<group>"; };
 		F3179D272B848E8C7975EEF2 /* Pods-Cheap MealsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cheap MealsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Cheap MealsUITests/Pods-Cheap MealsUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,6 +139,7 @@
 		EE07DA721E870B3000A2FABF /* Cheap Meals */ = {
 			isa = PBXGroup;
 			children = (
+				EEAAD12E1E883F3100388E83 /* Data */,
 				EE07DAA41E87116800A2FABF /* Controllers */,
 				EE07DA731E870B3000A2FABF /* AppDelegate.swift */,
 				EE07DA771E870B3000A2FABF /* Main.storyboard */,
@@ -170,6 +177,16 @@
 				EE07DA751E870B3000A2FABF /* ViewController.swift */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		EEAAD12E1E883F3100388E83 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				EEAAD12F1E883F5200388E83 /* Data.swift */,
+				EEAAD1311E883FAF00388E83 /* DataProtocol.swift */,
+				EEAAD1331E88438100388E83 /* DataDelegate.swift */,
+			);
+			name = Data;
 			sourceTree = "<group>";
 		};
 		FEFC7B170137BF2D35070E1F /* Frameworks */ = {
@@ -464,8 +481,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEAAD1301E883F5200388E83 /* Data.swift in Sources */,
+				EEAAD1321E883FAF00388E83 /* DataProtocol.swift in Sources */,
 				EE07DA761E870B3000A2FABF /* ViewController.swift in Sources */,
 				EE07DAA61E87119400A2FABF /* LoginController.swift in Sources */,
+				EEAAD1341E88438100388E83 /* DataDelegate.swift in Sources */,
 				EE07DA741E870B3000A2FABF /* AppDelegate.swift in Sources */,
 				EE07DA7C1E870B3000A2FABF /* Cheap_Meals.xcdatamodeld in Sources */,
 			);

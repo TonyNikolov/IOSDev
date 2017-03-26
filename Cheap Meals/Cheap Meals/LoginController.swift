@@ -11,8 +11,7 @@ import Firebase
 import FirebaseDatabase
 import FirebaseAuth
 
-class LoginController: UIViewController {
-    
+class LoginController: UIViewController, DataDelegate {
     let inputContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.white
@@ -22,6 +21,13 @@ class LoginController: UIViewController {
         
         return view
     }()
+    
+    var data: Data? {
+        get{
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            return appDelegate.data
+        }
+    }
     
     let loginRegisternButton: UIButton = {
         let button = UIButton(type: .system)
@@ -39,58 +45,6 @@ class LoginController: UIViewController {
         
         return button
     }()
-    
-    func handleLoginRegister(){
-        if loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
-            handelLogin()
-        } else{
-            handleRegister()
-        }
-    }
-    
-    func handelLogin(){
-        guard let email = emailTextField.text, let password = passwordTextField.text
-            else {
-                print("invalid input")
-                return
-        }
-        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user: FIRUser?, error) in
-            if error != nil{
-                print(error!)
-            } else{
-                self.dismiss(animated: true, completion: nil)
-            }
-            
-        })
-    }
-    
-    func handleRegister(){
-        guard let email = emailTextField.text, let password = passwordTextField.text, let name = nameTextField.text
-            else {
-                print("invalid input")
-                return
-        }
-        
-        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user: FIRUser?, error) in
-            if error != nil{
-                print(error!)
-            }
-            
-            guard (user?.uid) != nil else {
-                return
-            }
-            
-            let ref = FIRDatabase.database().reference().child("restaurants").child((user?.uid)!)
-            let values = ["name": name, "email": email]
-            ref.updateChildValues(values, withCompletionBlock: { (error, ref) in
-                if error != nil{
-                    print(error!)
-                } else{
-                    self.dismiss(animated: true, completion: nil)
-                }
-            })
-        })
-    }
     
     let nameTextField: UITextField = {
         let tf = UITextField()
@@ -122,7 +76,6 @@ class LoginController: UIViewController {
         return view
     }()
     
-    
     let passwordTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Password"
@@ -139,6 +92,55 @@ class LoginController: UIViewController {
         sc.addTarget(self, action: #selector(handleLoginRegisterChange), for: .valueChanged)
         return sc
     }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = UIColor(r: 218, g: 80, b: 84)
+        view.addSubview(inputContainerView)
+        view.addSubview(loginRegisternButton)
+        view.addSubview(loginRegisterSegmentedControl)
+        setupInputContainerView()
+        setupLoginRegisterButton()
+        setupLoginRegisterSegmentedControl()
+    }
+    
+    
+    func handleLoginRegister(){
+        if loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
+            handelLogin()
+        } else{
+            handleRegister()
+        }
+    }
+    
+    func handleRegister(){
+        guard let email = emailTextField.text, let password = passwordTextField.text, let name = nameTextField.text
+            else {
+                print("invalid input")
+                return
+        }
+        self.data?.delegate = self
+        self.data?.userRegister(withEmail: email, andPassword: password, andDisplayName: name)
+    }
+    
+    func handelLogin(){
+        guard let email = emailTextField.text, let password = passwordTextField.text
+            else {
+                print("invalid input")
+                return
+        }
+        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user: FIRUser?, error) in
+            if error != nil{
+                print(error!)
+            } else{
+                self.data?.delegate = self
+                self.data?.userLogin(withEmail: email, andPassword: password)
+            }
+            
+        })
+    }
+    
+    
     
     func handleLoginRegisterChange(){
         let title = loginRegisterSegmentedControl.titleForSegment(at: loginRegisterSegmentedControl.selectedSegmentIndex)
@@ -160,17 +162,7 @@ class LoginController: UIViewController {
         
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = UIColor(r: 218, g: 80, b: 84)
-        view.addSubview(inputContainerView)
-        view.addSubview(loginRegisternButton)
-        view.addSubview(loginRegisterSegmentedControl)
-        setupInputContainerView()
-        setupLoginRegisterButton()
-        setupLoginRegisterSegmentedControl()
-    }
+    
     
     func setupLoginRegisterSegmentedControl(){
         loginRegisterSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -234,6 +226,14 @@ class LoginController: UIViewController {
         loginRegisternButton.widthAnchor.constraint(equalTo: inputContainerView.widthAnchor).isActive=true
         loginRegisternButton.heightAnchor.constraint(equalToConstant: 50).isActive=true
         
+    }
+    
+    func onSuccessRegister(){
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func onSuccessLogin() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
